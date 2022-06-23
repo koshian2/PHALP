@@ -303,25 +303,37 @@ class PHALP_tracker(nn.Module):
             os.system('mv basicModel_neutral_lbs_10_207_0_v1.0.0_p3.pkl _DATA/models/smpl/SMPL_NEUTRAL.pkl')
 
         
-        download_files = {
-            "posetrack_gt_data.pickle" : "https://drive.google.com/file/d/1pmtc3l6W8AXScRnhV_KIYqTrzM0-Qb-D/view?usp=sharing",
-            "posetrack-val_videos.npy" : "https://drive.google.com/file/d/1ln5M1Lro7mKH-IQJ4kA0Uj0Xks9apQOH/view?usp=sharing",
-            "texture.npz"              : "https://drive.google.com/file/d/1T37ym8d6tDxLpdOaCJyQ9bZ1ejIvJAoH/view?usp=sharing",
-            "SMPL_to_J19.pkl"          : "https://drive.google.com/file/d/1UWsrBc5XH1ZkB_cfIR9aJVGtwE_0NOPP/view?usp=sharing",
-            "smpl_mean_params.npz"     : "https://drive.google.com/file/d/11mMhMmPJqtDNoOQWA_B4neVpOW_3unCE/view?usp=sharing",
-            "J_regressor_h36m.npy"     : "https://drive.google.com/file/d/1I0QZqGJpyP7Hv5BypmxqX60gwjX2nPNn/view?usp=sharing",
-            "hmar_v2_weights.pth"      : "https://drive.google.com/file/d/1_wZcPv8MxPoZyEGA9rI5ayXiB7Fhhj4b/view?usp=sharing",
-            "hmmr_v2_weights.pt"       : "https://drive.google.com/file/d/1hMjFoyVkoHIiYJBndvCoy2fs9T8j-ULU/view?usp=sharing",
-        }
-        
-        for file_name, url in download_files.items():
+        #download_files = {
+        #    "posetrack_gt_data.pickle" : "https://drive.google.com/file/d/1pmtc3l6W8AXScRnhV_KIYqTrzM0-Qb-D/view?usp=sharing",
+        #    "posetrack-val_videos.npy" : "https://drive.google.com/file/d/1ln5M1Lro7mKH-IQJ4kA0Uj0Xks9apQOH/view?usp=sharing",
+        #    "texture.npz"              : "https://drive.google.com/file/d/1T37ym8d6tDxLpdOaCJyQ9bZ1ejIvJAoH/view?usp=sharing",
+        #    "SMPL_to_J19.pkl"          : "https://drive.google.com/file/d/1UWsrBc5XH1ZkB_cfIR9aJVGtwE_0NOPP/view?usp=sharing",
+        #    "smpl_mean_params.npz"     : "https://drive.google.com/file/d/11mMhMmPJqtDNoOQWA_B4neVpOW_3unCE/view?usp=sharing",
+        #    "J_regressor_h36m.npy"     : "https://drive.google.com/file/d/1I0QZqGJpyP7Hv5BypmxqX60gwjX2nPNn/view?usp=sharing",
+        #    "hmar_v2_weights.pth"      : "https://drive.google.com/file/d/1_wZcPv8MxPoZyEGA9rI5ayXiB7Fhhj4b/view?usp=sharing",
+        #    "hmmr_v2_weights.pt"       : "https://drive.google.com/file/d/1hMjFoyVkoHIiYJBndvCoy2fs9T8j-ULU/view?usp=sharing",
+        #}
+        #
+        #for file_name, url in download_files.items():
+        #    if not os.path.exists("_DATA/" + file_name):
+        #        print("Downloading file: " + file_name)
+        #        output = gdown.cached_download(url, "_DATA/" + file_name, fuzzy=True)#
+        #
+        #        assert os.path.exists("_DATA/" + file_name), f"{output} does not exist"
+        download_files = [
+            "https://github.com/koshian2/PHALP/releases/download/Resources/hmar_v2_weights.pth",
+            "https://github.com/koshian2/PHALP/releases/download/Resources/hmmr_v2_weights.pt",
+            "https://github.com/koshian2/PHALP/releases/download/Resources/J_regressor_h36m.npy",
+            "https://github.com/koshian2/PHALP/releases/download/Resources/posetrack-val_videos.npy",
+            "https://github.com/koshian2/PHALP/releases/download/Resources/posetrack_gt_data.pickle",
+            "https://github.com/koshian2/PHALP/releases/download/Resources/smpl_mean_params.npz",
+            "https://github.com/koshian2/PHALP/releases/download/Resources/SMPL_to_J19.pkl",
+            "https://github.com/koshian2/PHALP/releases/download/Resources/texture.npz"
+        ]
+        for file_name in download_files:
             if not os.path.exists("_DATA/" + file_name):
                 print("Downloading file: " + file_name)
-                output = gdown.cached_download(url, "_DATA/" + file_name, fuzzy=True)
-
-                assert os.path.exists("_DATA/" + file_name), f"{output} does not exist"
-
-
+                os.system("wget -P _DATA " + file_name)
 
     def convert(self, old_pkl):
         # Code adapted from https://github.com/nkolot/ProHMR
