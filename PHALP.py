@@ -252,28 +252,6 @@ class PHALP_tracker(nn.Module):
                          }
         
         return detection_data
-
-    def get_human_apl_light(self, bbox, score, frame_name, mask_name, t_, measurments, gt=1):        
-        img_height, img_width, new_image_size, left, top = measurments
-        
-        center_             = np.array([(bbox[2] + bbox[0])/2, (bbox[3] + bbox[1])/2])
-        scale_              = np.array([(bbox[2] - bbox[0]), (bbox[3] - bbox[1])])
-
-        detection_data = {
-                              "bbox"            : np.array([bbox[0], bbox[1], (bbox[2] - bbox[0]), (bbox[3] - bbox[1])]),
-                              "conf"            : score, 
-                              "center"          : center_,
-                              "scale"           : scale_,
-                              "size"            : [img_height, img_width],
-                              "img_path"        : frame_name[0] + "/" + frame_name[1],
-                              "img_name"        : frame_name[1],
-                              "mask_name"       : mask_name,
-                              "ground_truth"    : gt,
-                              "time"            : t_,
-                         }
-        
-        return detection_data
-    
     
     def get_detections(self, image, frame_name, t_):
         image_to_write = image.copy()
